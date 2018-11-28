@@ -1,0 +1,70 @@
+; ModuleID = 'Program'
+source_filename = "Program"
+
+@string = internal constant [32 x i8] c"Transfer disk %d from %d to %d\0A\00"
+@string.1 = internal constant [18 x i8] c"Transfer disk %d \00"
+@string.2 = internal constant [9 x i8] c"from %d \00"
+@string.3 = internal constant [7 x i8] c"to %d\0A\00"
+
+define void @main() {
+entry:
+  call void @main.4()
+  ret void
+}
+
+define internal void @towerOfHanoi(i64 %n, i64 %from, i64 %to, i64 %aux) {
+entry:
+  %n1 = alloca i64
+  store i64 %n, i64* %n1
+  %from2 = alloca i64
+  store i64 %from, i64* %from2
+  %to3 = alloca i64
+  store i64 %to, i64* %to3
+  %aux4 = alloca i64
+  store i64 %aux, i64* %aux4
+  %tmp = load i64, i64* %n1
+  %tmp5 = icmp eq i64 %tmp, 1
+  %zext = zext i1 %tmp5 to i64
+  %tmp6 = icmp ne i64 %zext, 0
+  br i1 %tmp6, label %ifBlock, label %mergeBlock
+
+ifBlock:                                          ; preds = %entry
+  %tmp7 = load i64, i64* %n1
+  %tmp8 = load i64, i64* %from2
+  %tmp9 = load i64, i64* %to3
+  %printf = call i64 (...) @printf([32 x i8]* @string, i64 %tmp7, i64 %tmp8, i64 %tmp9)
+  ret void
+
+mergeBlock:                                       ; preds = %entry
+  %tmp10 = load i64, i64* %n1
+  %tmp11 = sub i64 %tmp10, 1
+  %tmp12 = load i64, i64* %from2
+  %tmp13 = load i64, i64* %aux4
+  %tmp14 = load i64, i64* %to3
+  call void @towerOfHanoi(i64 %tmp11, i64 %tmp12, i64 %tmp13, i64 %tmp14)
+  %tmp15 = load i64, i64* %n1
+  %printf16 = call i64 (...) @printf([18 x i8]* @string.1, i64 %tmp15)
+  %tmp17 = load i64, i64* %from2
+  %printf18 = call i64 (...) @printf([9 x i8]* @string.2, i64 %tmp17)
+  %tmp19 = load i64, i64* %to3
+  %printf20 = call i64 (...) @printf([7 x i8]* @string.3, i64 %tmp19)
+  %tmp21 = load i64, i64* %n1
+  %tmp22 = sub i64 %tmp21, 1
+  %tmp23 = load i64, i64* %aux4
+  %tmp24 = load i64, i64* %to3
+  %tmp25 = load i64, i64* %from2
+  call void @towerOfHanoi(i64 %tmp22, i64 %tmp23, i64 %tmp24, i64 %tmp25)
+  ret void
+}
+
+declare i64 @printf(...)
+
+define internal void @main.4() {
+entry:
+  %n = alloca i64
+  store i64 0, i64* %n
+  store i64 4, i64* %n
+  %tmp = load i64, i64* %n
+  call void @towerOfHanoi(i64 %tmp, i64 1, i64 2, i64 3)
+  ret void
+}

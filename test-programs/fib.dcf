@@ -1,0 +1,42 @@
+class Program
+{
+  int computeFibonaci(int num)
+  {
+    int prev1;
+    int prev2;
+    int tmp;
+    int cur;
+    int i;
+
+    if(num==1)
+    {
+    callout("printf", "0\n", cur);
+      return 0;
+    }
+
+    if(num==2)
+    {
+      callout("printf", "1\n", cur);
+      return 1;
+    }
+
+    prev1 = 0;
+    prev2 = 1;
+    tmp = num;
+
+    for i=0,(num-1)
+    {
+      cur = prev1 + prev2;
+      prev1 = prev2;
+      prev2 = cur;
+      tmp = tmp - 1;
+      i = i + 1;
+    }
+    callout("printf", "%d fibonacci number is %d\n", num, cur);
+    return cur;
+  }
+  void main()
+  {
+    computeFibonaci(1000);
+  }
+}

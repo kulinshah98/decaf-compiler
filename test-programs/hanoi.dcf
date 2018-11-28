@@ -1,0 +1,22 @@
+class Program
+{
+  void towerOfHanoi(int n, int from, int to, int aux)
+  {
+    if(n == 1)
+    {
+      callout("printf", "Transfer disk %d from %d to %d\n", n, from, to);
+      return;
+    }
+    towerOfHanoi(n-1, from, aux, to);
+    callout("printf", "Transfer disk %d ", n);
+    callout("printf", "from %d ", from);
+    callout("printf", "to %d\n", to);
+    towerOfHanoi(n-1, aux, to, from);
+  }
+  void main()
+  {
+    //int n;
+    n = 4;
+    towerOfHanoi(n, 1, 2, 3);
+  }
+}
